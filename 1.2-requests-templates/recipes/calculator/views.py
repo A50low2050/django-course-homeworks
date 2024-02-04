@@ -30,9 +30,9 @@ DATA = {
 # }
 
 
-def get_omlet(request):
+def get_dish(request, recipe):
     servings = request.GET.get('servings')
-    get_recipe = DATA['omlet']
+    get_recipe = DATA.get(recipe)
 
     context = {
         'recipe': {
@@ -40,48 +40,12 @@ def get_omlet(request):
         }
     }
 
-    for ingredient, amount in get_recipe.items():
-        if servings:
-            context['recipe'][ingredient] = amount * int(servings)
-        else:
-            context['recipe'][ingredient] = amount
-
-    return render(request, 'calculator/index.html', context)
-
-
-def get_pasta(request):
-    servings = request.GET.get('servings')
-    get_recipe = DATA['pasta']
-
-    context = {
-        'recipe': {
-
-        }
-    }
-
-    for ingredient, amount in get_recipe.items():
-        if servings:
-            context['recipe'][ingredient] = amount * int(servings)
-        else:
-            context['recipe'][ingredient] = amount
-
-    return render(request, 'calculator/index.html', context)
-
-
-def get_buter(request):
-    servings = request.GET.get('servings')
-    get_recipe = DATA['buter']
-
-    context = {
-        'recipe': {
-
-        }
-    }
-
-    for ingredient, amount in get_recipe.items():
-        if servings:
-            context['recipe'][ingredient] = amount * int(servings)
-        else:
-            context['recipe'][ingredient] = amount
-
-    return render(request, 'calculator/index.html', context)
+    if get_recipe:
+        for ingredient, amount in get_recipe.items():
+            if servings:
+                context['recipe'][ingredient] = round(amount * int(servings), 2)
+            else:
+                context['recipe'][ingredient] = amount
+        return render(request, 'calculator/index.html', context)
+    else:
+        return render(request, 'calculator/index.html', context)
