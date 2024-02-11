@@ -22,7 +22,6 @@ def show_catalog(request):
         return render(request, template, context)
 
     if sort == 'max_price':
-        print(sort)
         phones = Phone.objects.all().order_by('-price')
         context = {'phones': phones}
         return render(request, template, context)
