@@ -13,7 +13,7 @@ class Command(BaseCommand):
             phones = list(csv.DictReader(file, delimiter=';'))
 
         for phone in phones:
-            my_phones = Phone.objects.create(
+            Phone.objects.create(
                 id=phone['id'],
                 name=phone['name'],
                 image=phone['image'],
@@ -21,5 +21,3 @@ class Command(BaseCommand):
                 release_date=phone['release_date'],
                 lte_exists=phone['lte_exists'],
             )
-
-            my_phones.save()
